@@ -12,10 +12,6 @@ public class GameLog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
@@ -28,8 +24,7 @@ public class GameLog {
     public GameLog() {
     }
 
-    public GameLog(User user, Game game, Integer rating, String reviewText) {
-        this.user = user;
+    public GameLog(Game game, Integer rating, String reviewText) {
         this.game = game;
         this.rating = rating;
         this.reviewText = reviewText;
@@ -42,14 +37,6 @@ public class GameLog {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Game getGame() {
