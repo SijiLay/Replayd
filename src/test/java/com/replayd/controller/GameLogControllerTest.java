@@ -54,4 +54,19 @@ public class GameLogControllerTest {
                 )
                 .andExpect(status().isBadRequest());
     }
+    @Test
+    void validGameLogRequestReturnsOk() throws Exception {
+
+        GameLogRequest request = new GameLogRequest();
+        request.setGameId(1L);
+        request.setRating(5);
+        request.setReviewText("Great game");
+
+        mockMvc.perform(
+                        post("/game-logs")
+                                .contentType("application/json")
+                                .content(objectMapper.writeValueAsString(request))
+                )
+                .andExpect(status().isOk());
+    }
 }
