@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import GamesPage from "./pages/GamesPage"
 import GameDetailPage from "./pages/GameDetailPage"
+import HistoryPage from "./pages/HistoryPage"
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
                 <Route path="/" element={<Navigate to="/games" replace />} />
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/games/:id" element={<GameDetailPage />} />
+                <Route path="/history" element={<HistoryPage />} />
             </Routes>
         </BrowserRouter>
     )

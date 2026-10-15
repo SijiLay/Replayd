@@ -1,3 +1,5 @@
+import type { GameLog } from "../types/GameLog"
+
 export type GameLogRequest = {
     gameId: number
     rating: number | null
@@ -6,7 +8,7 @@ export type GameLogRequest = {
 
 const API_URL = "http://localhost:8080/game-logs"
 
-export async function logGame(request: GameLogRequest) {
+export async function logGame(request: GameLogRequest): Promise<GameLog> {
     const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -17,6 +19,16 @@ export async function logGame(request: GameLogRequest) {
 
     if (!response.ok) {
         throw new Error("Failed to log game")
+    }
+
+    return response.json()
+}
+
+export async function getGameLogs(): Promise<GameLog[]> {
+    const response = await fetch(API_URL)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch game logs")
     }
 
     return response.json()

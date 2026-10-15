@@ -65,7 +65,7 @@ function GameDetailPage() {
         return <p>{error ?? "Game not found"}</p>
     }
 
-    return (
+    return ( //what returns on the screen
         <main>
             <h1>
                 {game.awayTeam} at {game.homeTeam}
