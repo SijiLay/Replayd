@@ -50,4 +50,8 @@ public class GameLogService {
 
         return gameLogRepository.save(newGameLog);
     }
+
+    public GameLog getGameLogByGameId(Long gameId) {
+        return gameLogRepository.findByGameId(gameId).orElse(null);
+    }
 }

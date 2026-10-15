@@ -21,3 +21,4 @@ export async function getGameById(id: number): Promise<Game> {
 
     return response.json()
 }
+

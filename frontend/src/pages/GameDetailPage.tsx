@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import type { Game } from "../types/Game"
 import { getGameById } from "../services/gameService"
-import { logGame } from "../services/gameLogService"
+import { getGameLogByGameId, logGame } from "../services/gameLogService"
 
 function GameDetailPage() {
     const { id } = useParams()
@@ -26,6 +26,12 @@ function GameDetailPage() {
 
                 const data = await getGameById(Number(id))
                 setGame(data)
+                const existingLog = await getGameLogByGameId(Number(id))
+
+                if (existingLog) {
+                    setRating(existingLog.rating)
+                    setReviewText(existingLog.reviewText ?? "")
+                }
             } catch {
                 setError("Could not load game")
             } finally {
