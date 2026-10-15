@@ -23,4 +23,8 @@ public class GameService {
         return gameRepository.findById(id)
                 .orElseThrow(() -> new GameNotFoundException(id));
     }
+
+    public Game createGame(Game game) {
+        return gameRepository.save(game);
+    }
 }
