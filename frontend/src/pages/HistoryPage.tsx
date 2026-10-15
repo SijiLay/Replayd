@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import type { GameLog } from "../types/GameLog"
 import { getGameLogs } from "../services/gameLogService"
+import { Link } from "react-router-dom"
 
 function HistoryPage() {
     const [gameLogs, setGameLogs] = useState<GameLog[]>([])
@@ -36,11 +37,13 @@ function HistoryPage() {
 
             {gameLogs.length === 0 && <p>No games Replayd yet.</p>}
 
-            {gameLogs.map((gameLog) => (
+            {gameLogs.map((gameLog) => ( //for every game log create one article
                 <article key={gameLog.id}>
-                    <h2>
-                        {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
-                    </h2>
+                    <Link to={`/history/${gameLog.id}`}>
+                        <h2>
+                            {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
+                        </h2>
+                    </Link>
 
                     <p>
                         Rating: {gameLog.rating !== null ? `${gameLog.rating}/5` : "No rating"}

@@ -33,3 +33,13 @@ export async function getGameLogs(): Promise<GameLog[]> {
 
     return response.json()
 }
+
+export async function getGameLogById(id: number): Promise<GameLog> {
+    const response = await fetch(`${API_URL}/${id}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch game log")
+    }
+
+    return response.json()
+}
