@@ -8,3 +8,4 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+//this starts React adn renders App

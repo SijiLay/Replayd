@@ -15,3 +15,5 @@ function App() {
 }
 
 export default App
+
+//handles things like routing and decides which page component should render
