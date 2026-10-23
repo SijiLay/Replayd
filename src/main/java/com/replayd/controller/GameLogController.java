@@ -4,6 +4,7 @@ import com.replayd.dto.GameLogRequest;
 import com.replayd.model.GameLog;
 import com.replayd.service.GameLogService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -28,6 +29,17 @@ public class GameLogController {
     @GetMapping("/{id}")
     public GameLog getGameLogById(@PathVariable Long id) {
         return gameLogService.getGameLogById(id);
+    }
+
+    @GetMapping("/game/{gameId}")
+    public ResponseEntity<GameLog> getGameLogByGameId(@PathVariable Long gameId) {
+        GameLog gameLog = gameLogService.getGameLogByGameId(gameId);
+
+        if (gameLog == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(gameLog);
     }
 
     @PostMapping

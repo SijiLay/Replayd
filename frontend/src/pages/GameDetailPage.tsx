@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react" //use state stores temporary page data
+import { useParams } from "react-router-dom" //gets id
 import type { Game } from "../types/Game"
 import { getGameById } from "../services/gameService"
 import { getGameLogByGameId, logGame } from "../services/gameLogService"
@@ -15,6 +15,8 @@ function GameDetailPage() {
     const [reviewText, setReviewText] = useState("")
     const [saving, setSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState<string | null>(null)
+    const [isLogged, setIsLogged] = useState(false)
+
 
     useEffect(() => {
         async function loadGame() {
@@ -26,9 +28,11 @@ function GameDetailPage() {
 
                 const data = await getGameById(Number(id))
                 setGame(data)
+
                 const existingLog = await getGameLogByGameId(Number(id))
 
                 if (existingLog) {
+                    setIsLogged(true)
                     setRating(existingLog.rating)
                     setReviewText(existingLog.reviewText ?? "")
                 }
@@ -54,6 +58,8 @@ function GameDetailPage() {
                 rating,
                 reviewText: reviewText.trim() === "" ? null : reviewText,
             })
+
+            setIsLogged(true);
 
             setSaveMessage("Game added to Replayd")
         } catch {
@@ -118,7 +124,11 @@ function GameDetailPage() {
                 </label>
 
                 <button onClick={handleReplayd} disabled={saving}>
-                    {saving ? "Saving..." : "Mark as Replayd"}
+                    {saving
+                        ? "Saving..."
+                        : isLogged
+                            ? "Update Replayd"
+                            : "Mark as Replayd"}
                 </button>
 
                 {saveMessage && <p>{saveMessage}</p>}
