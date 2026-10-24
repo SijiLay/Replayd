@@ -13,7 +13,8 @@
 
 .games-list {
     display: grid;
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
 }
 
 .game-search {
@@ -35,4 +36,36 @@
 .game-search:focus {
     outline: none;
     border-color: #4b5d70;
+}
+
+.week-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.week-navigation button,
+.week-navigation select {
+    background: #111827;
+    color: white;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+}
+
+.week-navigation button {
+    cursor: pointer;
+}
+
+.week-navigation button:hover:not(:disabled),
+.week-navigation select:hover {
+    border-color: #64748b;
+}
+
+.week-navigation button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }

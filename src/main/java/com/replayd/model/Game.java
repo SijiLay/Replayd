@@ -2,6 +2,7 @@ package com.replayd.model;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity //means you can store this in a database
@@ -17,7 +18,7 @@ public class Game {
 
     private String homeTeam;
     private String awayTeam;
-    private LocalDateTime gameDate;
+    private Instant gameDate;
     private int season;
     private int week;
     private String sport;
@@ -34,7 +35,7 @@ public class Game {
     public Game(
             String homeTeam,
             String awayTeam,
-            LocalDateTime gameDate,
+            Instant gameDate,
             int season,
             int week,
             String sport,
@@ -81,11 +82,11 @@ public class Game {
         this.awayTeam = awayTeam;
     }
 
-    public LocalDateTime getGameDate() {
+    public Instant getGameDate() {
         return gameDate;
     }
 
-    public void setGameDate(LocalDateTime gameDate) {
+    public void setGameDate(Instant gameDate) {
         this.gameDate = gameDate;
     }
 

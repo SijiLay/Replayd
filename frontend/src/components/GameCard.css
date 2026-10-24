@@ -1,36 +1,80 @@
+
 .game-card {
     display: block;
     padding: 20px;
-    margin-bottom: 16px;
-
-    background: #121821;
-    border: 1px solid #222b36;
+    border: 1px solid #334155;
     border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    background: #111827;
 
     transition:
-            transform 0.15s ease,
-            border-color 0.15s ease,
-            background 0.15s ease;
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
 }
 
-.game-card:hover {
-    transform: translateY(-2px);
-    border-color: #3a4655;
-    background: #151d27;
+.game-card-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.game-card h2 {
-    margin-bottom: 8px;
-    font-size: 1.2rem;
+.game-card-team {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 14px;
 }
 
-.game-card-meta {
-    color: #9ca8b5;
-    font-size: 0.95rem;
+.team-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
 }
 
-.game-card-date {
-    margin-top: 6px;
-    color: #6f7d8c;
+.team-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.team-score {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.game-card-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #334155;
     font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* Hover animation */
+.game-card:hover {
+    border-color: #64748b;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+/* Click animation */
+.game-card:active {
+    transform: scale(0.98);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .game-card {
+        transition: none;
+    }
+
+    .game-card:hover,
+    .game-card:active {
+        transform: none;
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Service
 public class SportsDataService {
@@ -63,7 +64,9 @@ public class SportsDataService {
             game.setAwayTeam(sportsEvent.getStrAwayTeam());
 
             game.setGameDate(
-                    LocalDateTime.parse(sportsEvent.getStrTimestamp())
+                    LocalDateTime
+                            .parse(sportsEvent.getStrTimestamp())
+                            .toInstant(ZoneOffset.UTC)
             );
 
             game.setSeason(
