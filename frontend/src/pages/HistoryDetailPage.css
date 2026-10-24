@@ -1,4 +1,6 @@
 .history-detail {
+    max-width: 900px;
+    margin: 0 auto;
     display: grid;
     gap: 24px;
 }
@@ -15,22 +17,29 @@
 }
 
 .history-detail-meta {
-    color: #9ca8b5;
+    color: #8b98a7;
     margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
 .history-detail-review {
-    margin-top: 20px;
-    padding-top: 20px;
+    margin-top: 28px;
+    padding: 24px 0;
+
     border-top: 1px solid #222b36;
-    color: #d1d7df;
-    line-height: 1.6;
+    border-bottom: 1px solid #222b36;
+
+    color: #f3f4f6;
+
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.7;
 }
 
 .history-detail-logged {
     margin-top: 20px;
     color: #6f7d8c;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .edit-replayd-link {
@@ -47,4 +56,62 @@
 
 .edit-replayd-link:hover {
     background: #1d4ed8;
+}
+
+.history-detail-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.history-detail-team {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+}
+
+.history-detail-team + .history-detail-team {
+    border-top: 1px solid #222b36;
+}
+
+.history-detail-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.history-detail-team-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.history-detail-score {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+
+
+
+@media (max-width: 600px) {
+    .history-detail-team {
+        grid-template-columns: 50px 1fr auto;
+        gap: 12px;
+    }
+
+    .history-detail-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .history-detail-team-name {
+        font-size: 1rem;
+    }
+
+    .history-detail-score {
+        font-size: 1.5rem;
+    }
 }

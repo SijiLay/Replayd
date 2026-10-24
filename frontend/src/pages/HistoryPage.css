@@ -34,15 +34,42 @@
     border-color: #3a4655;
 }
 
-.history-card h2 {
-    margin-bottom: 10px;
-}
-
 .history-meta {
-    color: #9ca8b5;
-    margin-bottom: 6px;
+    color: #8b98a7;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
 }
 
 .history-review {
-    color: #d1d7df;
+    margin-top: 14px;
+    padding-top: 14px;
+
+    border-top: 1px solid #222b36;
+
+    color: #f3f4f6;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.history-card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.history-card-team {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.history-card-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
 }

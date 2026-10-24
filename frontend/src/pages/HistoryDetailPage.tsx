@@ -44,13 +44,66 @@ function HistoryDetailPage() {
     return (
         <main className="history-detail">
             <section className="history-detail-card">
-                <h1>
-                    {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
-                </h1>
+                <div className="history-detail-teams">
+
+                    <div className="history-detail-team">
+                        {gameLog.game.awayTeamBadge && (
+                            <img
+                                src={gameLog.game.awayTeamBadge}
+                                alt={`${gameLog.game.awayTeam} logo`}
+                                className="history-detail-logo"
+                            />
+                        )}
+
+                        <span className="history-detail-team-name">
+            {gameLog.game.awayTeam}
+        </span>
+
+                        <span className="history-detail-score">
+            {gameLog.game.awayScore ?? "-"}
+        </span>
+                    </div>
+
+                    <div className="history-detail-team">
+                        {gameLog.game.homeTeamBadge && (
+                            <img
+                                src={gameLog.game.homeTeamBadge}
+                                alt={`${gameLog.game.homeTeam} logo`}
+                                className="history-detail-logo"
+                            />
+                        )}
+
+                        <span className="history-detail-team-name">
+            {gameLog.game.homeTeam}
+        </span>
+
+                        <span className="history-detail-score">
+            {gameLog.game.homeScore ?? "-"}
+        </span>
+                    </div>
+
+                </div>
 
                 <p className="history-detail-meta">
-                    {gameLog.game.sport} • Week {gameLog.game.week} •{" "}
+                    {gameLog.game.status === "FT"
+                        ? "FINAL"
+                        : gameLog.game.status === "AOT"
+                            ? "FINAL/OT"
+                            : gameLog.game.status ?? "Scheduled"}
+                    {" • "}
+                    Week {gameLog.game.week}
+                    {" • "}
                     {gameLog.game.season}
+                </p>
+
+                <p className="history-detail-meta">
+                    {new Date(gameLog.game.gameDate).toLocaleString("en-US", {
+                        weekday: "long",
+                        month: "long",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "2-digit"
+                    })}
                 </p>
 
                 <p className="history-detail-meta">

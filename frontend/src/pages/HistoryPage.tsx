@@ -49,9 +49,33 @@ function HistoryPage() {
                         className="history-card"
                         key={gameLog.id}
                     >
-                        <h2>
-                            {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
-                        </h2>
+                        <div className="history-card-top">
+
+                            <div className="history-card-team">
+                                {gameLog.game.awayTeamBadge && (
+                                    <img
+                                        src={gameLog.game.awayTeamBadge}
+                                        alt={`${gameLog.game.awayTeam} logo`}
+                                        className="history-card-logo"
+                                    />
+                                )}
+
+                                <span>{gameLog.game.awayTeam}</span>
+                            </div>
+
+                            <div className="history-card-team">
+                                {gameLog.game.homeTeamBadge && (
+                                    <img
+                                        src={gameLog.game.homeTeamBadge}
+                                        alt={`${gameLog.game.homeTeam} logo`}
+                                        className="history-card-logo"
+                                    />
+                                )}
+
+                                <span>{gameLog.game.homeTeam}</span>
+                            </div>
+
+                        </div>
 
                         <p className="history-meta">
                             {gameLog.watchType === "FULL_GAME"
