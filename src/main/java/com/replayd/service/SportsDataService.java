@@ -76,7 +76,24 @@ public class SportsDataService {
 
             game.setSport(sportsEvent.getStrSport());
 
-            //saves the new game or updates the existing game
+            game.setHomeScore(
+                    sportsEvent.getIntHomeScore() == null
+                            ? null
+                            : Integer.parseInt(sportsEvent.getIntHomeScore())
+            );
+
+            game.setAwayScore(
+                    sportsEvent.getIntAwayScore() == null
+                            ? null
+                            : Integer.parseInt(sportsEvent.getIntAwayScore())
+            );
+
+            game.setStatus(sportsEvent.getStrStatus());
+
+            game.setHomeTeamBadge(sportsEvent.getStrHomeTeamBadge());
+
+            game.setAwayTeamBadge(sportsEvent.getStrAwayTeamBadge());
+
             gameRepository.save(game);
         }
     }

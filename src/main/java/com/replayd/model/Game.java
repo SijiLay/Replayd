@@ -22,16 +22,39 @@ public class Game {
     private int week;
     private String sport;
 
+    private Integer homeScore;
+    private Integer awayScore;
+    private String status;
+    private String homeTeamBadge;
+    private String awayTeamBadge;
+
     public Game() {
     }
 
-    public Game(String homeTeam,String awayTeam, LocalDateTime gameDate, int season, int week, String sport) {
+    public Game(
+            String homeTeam,
+            String awayTeam,
+            LocalDateTime gameDate,
+            int season,
+            int week,
+            String sport,
+            Integer homeScore,
+            Integer awayScore,
+            String status,
+            String homeTeamBadge,
+            String awayTeamBadge
+    ) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.gameDate = gameDate;
         this.season = season;
         this.week = week;
         this.sport = sport;
+        this.homeScore = homeScore;
+        this.awayScore = awayScore;
+        this.status = status;
+        this.homeTeamBadge = homeTeamBadge;
+        this.awayTeamBadge = awayTeamBadge;
     }
 
     public Long getId() {
@@ -96,5 +119,45 @@ public class Game {
 
     public void setExternalId(String externalId) {
         this.externalId = externalId;
+    }
+
+    public Integer getHomeScore() {
+        return homeScore;
+    }
+
+    public void setHomeScore(Integer homeScore) {
+        this.homeScore = homeScore;
+    }
+
+    public Integer getAwayScore() {
+        return awayScore;
+    }
+
+    public void setAwayScore(Integer awayScore) {
+        this.awayScore = awayScore;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getHomeTeamBadge() {
+        return homeTeamBadge;
+    }
+
+    public void setHomeTeamBadge(String homeTeamBadge) {
+        this.homeTeamBadge = homeTeamBadge;
+    }
+
+    public String getAwayTeamBadge() {
+        return awayTeamBadge;
+    }
+
+    public void setAwayTeamBadge(String awayTeamBadge) {
+        this.awayTeamBadge = awayTeamBadge;
     }
 }
