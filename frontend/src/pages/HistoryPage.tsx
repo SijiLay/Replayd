@@ -44,7 +44,10 @@ function HistoryPage() {
                             {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
                         </h2>
                     </Link>
-
+                    <p>
+                        Watch Type:{" "}
+                        {gameLog.watchType === "FULL_GAME" ? "Full Game" : "Highlights"}
+                    </p>
                     <p>
                         Rating: {gameLog.rating !== null ? `${gameLog.rating}/5` : "No rating"}
                     </p>

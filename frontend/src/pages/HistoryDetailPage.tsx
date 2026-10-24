@@ -48,7 +48,10 @@ function HistoryDetailPage() {
                 {gameLog.game.sport} — Week {gameLog.game.week} —{" "}
                 {gameLog.game.season}
             </p>
-
+            <p>
+                Watch Type:{" "}
+                {gameLog.watchType === "FULL_GAME" ? "Full Game" : "Highlights"}
+            </p>
             <p>
                 Rating:{" "}
                 {gameLog.rating !== null ? `${gameLog.rating}/5` : "No rating"}
