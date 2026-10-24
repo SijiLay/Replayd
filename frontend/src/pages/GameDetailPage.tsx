@@ -16,6 +16,8 @@ function GameDetailPage() {
     const [saving, setSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState<string | null>(null)
     const [isLogged, setIsLogged] = useState(false)
+    const [watchType, setWatchType] =
+        useState<"FULL_GAME" | "HIGHLIGHTS">("FULL_GAME")
 
 
     useEffect(() => {
@@ -33,6 +35,7 @@ function GameDetailPage() {
 
                 if (existingLog) {
                     setIsLogged(true)
+                    setWatchType(existingLog.watchType)
                     setRating(existingLog.rating)
                     setReviewText(existingLog.reviewText ?? "")
                 }
@@ -55,6 +58,7 @@ function GameDetailPage() {
 
             await logGame({
                 gameId: game.id,
+                watchType,
                 rating,
                 reviewText: reviewText.trim() === "" ? null : reviewText,
             })
@@ -91,7 +95,20 @@ function GameDetailPage() {
 
             <section>
                 <h2>Log this game</h2>
-
+                <label>
+                    Watch Type
+                    <select
+                        value={watchType}
+                        onChange={(event) =>
+                            setWatchType(
+                                event.target.value as "FULL_GAME" | "HIGHLIGHTS"
+                            )
+                        }
+                    >
+                        <option value="FULL_GAME">Full Game</option>
+                        <option value="HIGHLIGHTS">Highlights</option>
+                    </select>
+                </label>
                 <label>
                     Rating
                     <select

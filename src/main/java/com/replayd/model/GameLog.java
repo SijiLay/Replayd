@@ -15,17 +15,21 @@ public class GameLog {
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
+
+
+    @Enumerated(EnumType.STRING)
+    private WatchType watchType = WatchType.FULL_GAME;
+
     private LocalDateTime loggedAt;
-
     private Integer rating;
-
     private String reviewText;
 
     public GameLog() {
     }
 
-    public GameLog(Game game, Integer rating, String reviewText) {
+    public GameLog(Game game, WatchType watchType, Integer rating, String reviewText) {
         this.game = game;
+        this.watchType = watchType;
         this.rating = rating;
         this.reviewText = reviewText;
         this.loggedAt = LocalDateTime.now();
@@ -70,4 +74,8 @@ public class GameLog {
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
+
+    public WatchType getWatchType() {return watchType;}
+
+    public void setWatchType(WatchType watchType) {this.watchType = watchType;}
 }

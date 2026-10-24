@@ -46,19 +46,9 @@ public class GameLogController {
     public GameLog logGame(@Valid @RequestBody GameLogRequest request) {
         return gameLogService.logGame(
                 request.getGameId(),
+                request.getWatchType(),
                 request.getRating(),
                 request.getReviewText()
         );
-    }
-
-    @GetMapping("/game/{gameId}")
-    public ResponseEntity<GameLog> getGameLogByGameId(@PathVariable Long gameId) {
-        GameLog gameLog = gameLogService.getGameLogByGameId(gameId);
-
-        if (gameLog == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(gameLog);
     }
 }

@@ -3,6 +3,7 @@ package com.replayd.service;
 import com.replayd.exception.GameNotFoundException;
 import com.replayd.model.Game;
 import com.replayd.model.GameLog;
+import com.replayd.model.WatchType;
 import com.replayd.repository.GameLogRepository;
 import com.replayd.repository.GameRepository;
 import org.springframework.stereotype.Service;
@@ -30,23 +31,34 @@ public class GameLogService {
         return gameLogRepository.findById(id).orElse(null);
     }
 
-    public GameLog logGame(Long gameId, Integer rating, String reviewText) {
+    public GameLog logGame(
+            Long gameId,
+            WatchType watchType,
+            Integer rating,
+            String reviewText
+    ) {
 
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new GameNotFoundException(gameId));
 
-        Optional<GameLog> existingLog = gameLogRepository.findByGameId(gameId);
+        WatchType finalWatchType =
+                watchType == null ? WatchType.FULL_GAME : watchType;
+
+        Optional<GameLog> existingLog =
+                gameLogRepository.findByGameId(gameId);
 
         if (existingLog.isPresent()) {
             GameLog gameLog = existingLog.get();
 
+            gameLog.setWatchType(finalWatchType);
             gameLog.setRating(rating);
             gameLog.setReviewText(reviewText);
 
             return gameLogRepository.save(gameLog);
         }
 
-        GameLog newGameLog = new GameLog(game, rating, reviewText);
+        GameLog newGameLog =
+                new GameLog(game, finalWatchType, rating, reviewText);
 
         return gameLogRepository.save(newGameLog);
     }
