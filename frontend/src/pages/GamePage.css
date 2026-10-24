@@ -1,0 +1,38 @@
+.games-page-header {
+    margin-bottom: 28px;
+}
+
+.games-page-header h1 {
+    margin-bottom: 8px;
+    font-size: 2rem;
+}
+
+.games-page-header p {
+    color: #8b98a7;
+}
+
+.games-list {
+    display: grid;
+    gap: 16px;
+}
+
+.game-search {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 24px;
+
+    background: #121821;
+    color: #f5f7fa;
+
+    border: 1px solid #2a3542;
+    border-radius: 10px;
+}
+
+.game-search::placeholder {
+    color: #6f7d8c;
+}
+
+.game-search:focus {
+    outline: none;
+    border-color: #4b5d70;
+}

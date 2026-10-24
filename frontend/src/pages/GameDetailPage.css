@@ -1,0 +1,85 @@
+.game-detail {
+    display: grid;
+    gap: 24px;
+}
+
+.game-detail-header {
+    padding: 24px;
+    background: #121821;
+    border: 1px solid #222b36;
+    border-radius: 16px;
+}
+
+.game-detail-header h1 {
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.game-detail-meta {
+    color: #9ca8b5;
+    margin-bottom: 8px;
+}
+
+.log-panel {
+    padding: 24px;
+    background: #121821;
+    border: 1px solid #222b36;
+    border-radius: 16px;
+
+    display: grid;
+    gap: 18px;
+}
+
+.log-panel h2 {
+    margin-bottom: 4px;
+}
+
+.form-group {
+    display: grid;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+
+    background: #0d131b;
+    color: #f5f7fa;
+
+    border: 1px solid #2a3542;
+    border-radius: 10px;
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.replayd-button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+
+    background: #2563eb;
+    color: white;
+
+    font-weight: 700;
+}
+
+.replayd-button:hover {
+    background: #1d4ed8;
+}
+
+.replayd-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.save-message {
+    color: #aeb8c4;
+}

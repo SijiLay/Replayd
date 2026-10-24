@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom" //gets id
 import type { Game } from "../types/Game"
 import { getGameById } from "../services/gameService"
 import { getGameLogByGameId, logGame } from "../services/gameLogService"
+import "./GameDetailPage.css"
+import StarRating from "../components/StarRating"
+
 
 function GameDetailPage() {
     const { id } = useParams()
@@ -81,66 +84,74 @@ function GameDetailPage() {
         return <p>{error ?? "Game not found"}</p>
     }
 
-    return ( //what returns on the screen
-        <main>
-            <h1>
-                {game.awayTeam} at {game.homeTeam}
-            </h1>
+    return (
+        <main className="game-detail">
 
-            <p>
-                {game.sport} — Week {game.week} — {game.season}
-            </p>
+            <section className="game-detail-header">
+                <h1>
+                    {game.awayTeam} at {game.homeTeam}
+                </h1>
 
-            <p>{new Date(game.gameDate).toLocaleString()}</p>
+                <p className="game-detail-meta">
+                    {game.sport} • Week {game.week} • {game.season}
+                </p>
 
-            <section>
-                <h2>Log this game</h2>
-                <label>
-                    Watch Type
+                <p>
+                    {new Date(game.gameDate).toLocaleString()}
+                </p>
+            </section>
+
+            <section className="log-panel">
+                <h2>{isLogged ? "Update your Replayd" : "Log this game"}</h2>
+
+                <div className="form-group">
+                    <label>Watch Type</label>
+
                     <select
                         value={watchType}
                         onChange={(event) =>
                             setWatchType(
-                                event.target.value as "FULL_GAME" | "HIGHLIGHTS"
+                                event.target.value as
+                                    "FULL_GAME" | "HIGHLIGHTS"
                             )
                         }
                     >
                         <option value="FULL_GAME">Full Game</option>
                         <option value="HIGHLIGHTS">Highlights</option>
                     </select>
-                </label>
-                <label>
-                    Rating
-                    <select
-                        value={rating ?? ""}
-                        onChange={(event) =>
-                            setRating(
-                                event.target.value === ""
-                                    ? null
-                                    : Number(event.target.value)
-                            )
-                        }
-                    >
-                        <option value="">No rating</option>
-                        <option value="1">1 star</option>
-                        <option value="2">2 stars</option>
-                        <option value="3">3 stars</option>
-                        <option value="4">4 stars</option>
-                        <option value="5">5 stars</option>
-                    </select>
-                </label>
+                </div>
 
-                <label>
-                    Review
+                <div className="form-group">
+                    <label>Rating</label>
+
+                    <div className="form-group">
+                        <label>Rating</label>
+
+                        <StarRating
+                            value={rating}
+                            onChange={setRating}
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label>Review</label>
+
                     <textarea
                         value={reviewText}
-                        onChange={(event) => setReviewText(event.target.value)}
+                        onChange={(event) =>
+                            setReviewText(event.target.value)
+                        }
                         maxLength={1000}
                         placeholder="Write an optional review..."
                     />
-                </label>
+                </div>
 
-                <button onClick={handleReplayd} disabled={saving}>
+                <button
+                    className="replayd-button"
+                    onClick={handleReplayd}
+                    disabled={saving}
+                >
                     {saving
                         ? "Saving..."
                         : isLogged
@@ -148,8 +159,11 @@ function GameDetailPage() {
                             : "Mark as Replayd"}
                 </button>
 
-                {saveMessage && <p>{saveMessage}</p>}
+                {saveMessage && (
+                    <p className="save-message">{saveMessage}</p>
+                )}
             </section>
+
         </main>
     )
 }

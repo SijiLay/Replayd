@@ -1,0 +1,48 @@
+.history-page-header {
+    margin-bottom: 28px;
+}
+
+.history-page-header h1 {
+    margin-bottom: 8px;
+    font-size: 2rem;
+}
+
+.history-page-header p {
+    color: #8b98a7;
+}
+
+.history-list {
+    display: grid;
+    gap: 16px;
+}
+
+.history-card {
+    display: block;
+    padding: 20px;
+
+    background: #121821;
+    border: 1px solid #222b36;
+    border-radius: 14px;
+
+    transition:
+            transform 0.15s ease,
+            border-color 0.15s ease;
+}
+
+.history-card:hover {
+    transform: translateY(-2px);
+    border-color: #3a4655;
+}
+
+.history-card h2 {
+    margin-bottom: 10px;
+}
+
+.history-meta {
+    color: #9ca8b5;
+    margin-bottom: 6px;
+}
+
+.history-review {
+    color: #d1d7df;
+}

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import type { GameLog } from "../types/GameLog"
 import { getGameLogs } from "../services/gameLogService"
 import { Link } from "react-router-dom"
+import "./HistoryPage.css"
+import StarRating from "../components/StarRating"
 
 function HistoryPage() {
     const [gameLogs, setGameLogs] = useState<GameLog[]>([])
@@ -33,32 +35,49 @@ function HistoryPage() {
 
     return (
         <main>
-            <h1>Replayd History</h1>
+            <div className="history-page-header">
+                <h1>Replayd History</h1>
+                <p>Your watched games, ratings, and reviews.</p>
+            </div>
 
             {gameLogs.length === 0 && <p>No games Replayd yet.</p>}
 
-            {gameLogs.map((gameLog) => ( //for every game log create one article
-                <article key={gameLog.id}>
-                    <Link to={`/history/${gameLog.id}`}>
+            <div className="history-list">
+                {gameLogs.map((gameLog) => (
+                    <Link
+                        to={`/history/${gameLog.id}`}
+                        className="history-card"
+                        key={gameLog.id}
+                    >
                         <h2>
                             {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
                         </h2>
-                    </Link>
-                    <p>
-                        Watch Type:{" "}
-                        {gameLog.watchType === "FULL_GAME" ? "Full Game" : "Highlights"}
-                    </p>
-                    <p>
-                        Rating: {gameLog.rating !== null ? `${gameLog.rating}/5` : "No rating"}
-                    </p>
 
-                    <p>
-                        {gameLog.reviewText ?? "No review"}
-                    </p>
-                </article>
-            ))}
+                        <p className="history-meta">
+                            {gameLog.watchType === "FULL_GAME"
+                                ? "Full Game"
+                                : "Highlights"}
+                        </p>
+
+                        {gameLog.rating !== null ? (
+                            <StarRating
+                                value={gameLog.rating}
+                                readOnly
+                            />
+                        ) : (
+                            <p className="history-meta">No rating</p>
+                        )}
+
+                        <p className="history-review">
+                            {gameLog.reviewText ?? "No review"}
+                        </p>
+                    </Link>
+                ))}
+            </div>
         </main>
     )
 }
 
 export default HistoryPage
+
+//might move stars later depends.

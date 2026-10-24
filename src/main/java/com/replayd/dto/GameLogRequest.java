@@ -1,15 +1,13 @@
 package com.replayd.dto;
 
 import com.replayd.model.WatchType;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
-public class GameLogRequest {
+public class GameLogRequest { //this is the class that gets and saves data from databases
     private Long gameId;
-    @Min(1)
-    @Max(5)
-    private Integer rating;
+    @DecimalMin("0.5")
+    @DecimalMax("5.0")
+    private Double rating;
     @Size(max = 1000)
     private String reviewText;
     private WatchType watchType;
@@ -22,11 +20,11 @@ public class GameLogRequest {
         this.gameId = gameId;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

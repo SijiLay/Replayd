@@ -1,0 +1,46 @@
+.star-button {
+    position: relative;
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+
+    font-size: 32px;
+    line-height: 32px;
+
+    cursor: pointer;
+}
+
+.star-empty,
+.star-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+    line-height: 32px;
+    text-align: left;
+}
+
+.star-empty {
+    color: #4b5563;
+}
+
+.star-fill {
+    overflow: hidden;
+    color: #f5c451;
+    white-space: nowrap;
+}
+
+.star-fill.full {
+    width: 100%;
+}
+
+.star-fill.half {
+    width: 42%;
+}

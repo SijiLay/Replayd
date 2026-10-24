@@ -36,7 +36,7 @@ public class GameLogService {
     public GameLog logGame(
             Long gameId,
             WatchType watchType,
-            Integer rating,
+            Double rating,
             String reviewText
     ) {
 

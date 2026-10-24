@@ -1,5 +1,6 @@
 import type { Game } from "../types/Game"
 import { Link } from "react-router-dom"
+import "./GameCard.css"
 
 type GameCardProps = {
     game: Game
@@ -7,19 +8,19 @@ type GameCardProps = {
 
 function GameCard({ game }: GameCardProps) {
     return (
-        <article>
-            <Link to={`/games/${game.id}`}>
-                <h2>
-                    {game.awayTeam} at {game.homeTeam}
-                </h2>
-            </Link>
+        <Link to={`/games/${game.id}`} className="game-card">
+            <h2>
+                {game.awayTeam} at {game.homeTeam}
+            </h2>
 
-            <p>
-                {game.sport} — Week {game.week} — {game.season}
+            <p className="game-card-meta">
+                {game.sport} • Week {game.week} • {game.season}
             </p>
 
-            <p>{new Date(game.gameDate).toLocaleString()}</p>
-        </article>
+            <p className="game-card-date">
+                {new Date(game.gameDate).toLocaleString()}
+            </p>
+        </Link>
     )
 }
 

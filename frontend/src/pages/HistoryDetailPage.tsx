@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import type { GameLog } from "../types/GameLog"
 import { getGameLogById } from "../services/gameLogService"
+import "./HistoryDetailPage.css"
+import StarRating from "../components/StarRating"
+import { Link } from "react-router-dom"
 
 function HistoryDetailPage() {
     const { id } = useParams()
@@ -39,29 +42,47 @@ function HistoryDetailPage() {
     }
 
     return (
-        <main>
-            <h1>
-                {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
-            </h1>
+        <main className="history-detail">
+            <section className="history-detail-card">
+                <h1>
+                    {gameLog.game.awayTeam} at {gameLog.game.homeTeam}
+                </h1>
 
-            <p>
-                {gameLog.game.sport} — Week {gameLog.game.week} —{" "}
-                {gameLog.game.season}
-            </p>
-            <p>
-                Watch Type:{" "}
-                {gameLog.watchType === "FULL_GAME" ? "Full Game" : "Highlights"}
-            </p>
-            <p>
-                Rating:{" "}
-                {gameLog.rating !== null ? `${gameLog.rating}/5` : "No rating"}
-            </p>
+                <p className="history-detail-meta">
+                    {gameLog.game.sport} • Week {gameLog.game.week} •{" "}
+                    {gameLog.game.season}
+                </p>
 
-            <p>{gameLog.reviewText ?? "No review"}</p>
+                <p className="history-detail-meta">
+                    Watch Type:{" "}
+                    {gameLog.watchType === "FULL_GAME"
+                        ? "Full Game"
+                        : "Highlights"}
+                </p>
 
-            <p>
-                Logged: {new Date(gameLog.loggedAt).toLocaleString()}
-            </p>
+                {gameLog.rating !== null ? (
+                    <StarRating
+                        value={gameLog.rating}
+                        readOnly
+                    />
+                ) : (
+                    <p className="history-detail-meta">No rating</p>
+                )}
+
+                <div className="history-detail-review">
+                    {gameLog.reviewText ?? "No review"}
+                </div>
+
+                <p className="history-detail-logged">
+                    Logged: {new Date(gameLog.loggedAt).toLocaleString()}
+                </p>
+                <Link
+                    to={`/games/${gameLog.game.id}`}
+                    className="edit-replayd-link"
+                >
+                    Edit Replayd
+                </Link>
+            </section>
         </main>
     )
 }

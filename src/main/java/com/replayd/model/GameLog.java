@@ -21,13 +21,13 @@ public class GameLog {
     private WatchType watchType = WatchType.FULL_GAME;
 
     private LocalDateTime loggedAt;
-    private Integer rating;
+    private Double rating;
     private String reviewText;
 
     public GameLog() {
     }
 
-    public GameLog(Game game, WatchType watchType, Integer rating, String reviewText) {
+    public GameLog(Game game, WatchType watchType, Double rating, String reviewText) {
         this.game = game;
         this.watchType = watchType;
         this.rating = rating;
@@ -59,11 +59,11 @@ public class GameLog {
         this.loggedAt = loggedAt;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
