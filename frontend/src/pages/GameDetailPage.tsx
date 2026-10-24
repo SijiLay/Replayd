@@ -88,17 +88,69 @@ function GameDetailPage() {
         <main className="game-detail">
 
             <section className="game-detail-header">
-                <h1>
-                    {game.awayTeam} at {game.homeTeam}
-                </h1>
+
+                <div className="game-detail-team">
+                    {game.awayTeamBadge && (
+                        <img
+                            src={game.awayTeamBadge}
+                            alt={`${game.awayTeam} logo`}
+                            className="game-detail-logo"
+                        />
+                    )}
+
+                    <div className="game-detail-team-info">
+            <span className="game-detail-team-name">
+                {game.awayTeam}
+            </span>
+
+                        <span className="game-detail-score">
+                {game.awayScore ?? "-"}
+            </span>
+                    </div>
+                </div>
+
+                <div className="game-detail-team">
+                    {game.homeTeamBadge && (
+                        <img
+                            src={game.homeTeamBadge}
+                            alt={`${game.homeTeam} logo`}
+                            className="game-detail-logo"
+                        />
+                    )}
+
+                    <div className="game-detail-team-info">
+            <span className="game-detail-team-name">
+                {game.homeTeam}
+            </span>
+
+                        <span className="game-detail-score">
+                {game.homeScore ?? "-"}
+            </span>
+                    </div>
+                </div>
 
                 <p className="game-detail-meta">
-                    {game.sport} • Week {game.week} • {game.season}
+                    {game.status === "FT"
+                        ? "FINAL"
+                        : game.status === "AOT"
+                            ? "FINAL/OT"
+                            : game.status ?? "Scheduled"}
+                    {" • "}
+                    Week {game.week}
+                    {" • "}
+                    {game.season}
                 </p>
 
                 <p>
-                    {new Date(game.gameDate).toLocaleString()}
+                    {new Date(game.gameDate).toLocaleString("en-US", {
+                        weekday: "long",
+                        month: "long",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "2-digit"
+                    })}
                 </p>
+
             </section>
 
             <section className="log-panel">
@@ -124,14 +176,10 @@ function GameDetailPage() {
                 <div className="form-group">
                     <label>Rating</label>
 
-                    <div className="form-group">
-                        <label>Rating</label>
-
-                        <StarRating
-                            value={rating}
-                            onChange={setRating}
-                        />
-                    </div>
+                    <StarRating
+                        value={rating}
+                        onChange={setRating}
+                    />
                 </div>
 
                 <div className="form-group">

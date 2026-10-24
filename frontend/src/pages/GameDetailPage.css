@@ -1,42 +1,76 @@
 .game-detail {
-    display: grid;
-    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
 }
 
 .game-detail-header {
-    padding: 24px;
-    background: #121821;
-    border: 1px solid #222b36;
+    background: #111827;
+    border: 1px solid #334155;
     border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
 }
 
-.game-detail-header h1 {
-    margin-bottom: 10px;
+.game-detail-team {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+}
+
+.game-detail-team + .game-detail-team {
+    border-top: 1px solid #334155;
+}
+
+.game-detail-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.game-detail-team-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: 16px;
+}
+
+.game-detail-team-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.game-detail-score {
     font-size: 2rem;
+    font-weight: 700;
 }
 
 .game-detail-meta {
-    color: #9ca8b5;
-    margin-bottom: 8px;
+    margin-top: 20px;
+    margin-bottom: 6px;
+    color: #94a3b8;
+    font-weight: 600;
 }
 
 .log-panel {
-    padding: 24px;
-    background: #121821;
-    border: 1px solid #222b36;
+    background: #111827;
+    border: 1px solid #334155;
     border-radius: 16px;
-
-    display: grid;
-    gap: 18px;
+    padding: 24px;
 }
 
 .log-panel h2 {
-    margin-bottom: 4px;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .form-group {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 8px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
@@ -45,14 +79,12 @@
 
 .form-group select,
 .form-group textarea {
-    width: 100%;
-    padding: 12px;
-
-    background: #0d131b;
-    color: #f5f7fa;
-
-    border: 1px solid #2a3542;
+    background: #0f172a;
+    color: white;
+    border: 1px solid #334155;
     border-radius: 10px;
+    padding: 12px;
+    font-size: 1rem;
 }
 
 .form-group textarea {
@@ -60,26 +92,52 @@
     resize: vertical;
 }
 
-.replayd-button {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 10px;
-
-    background: #2563eb;
-    color: white;
-
-    font-weight: 700;
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #64748b;
 }
 
-.replayd-button:hover {
-    background: #1d4ed8;
+.replayd-button {
+    background: #1f2937;
+    color: white;
+    border: 1px solid #475569;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.replayd-button:hover:not(:disabled) {
+    border-color: #94a3b8;
 }
 
 .replayd-button:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
 .save-message {
-    color: #aeb8c4;
+    margin-top: 14px;
+    color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+    .game-detail {
+        padding: 16px;
+    }
+
+    .game-detail-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .game-detail-team-name {
+        font-size: 1rem;
+    }
+
+    .game-detail-score {
+        font-size: 1.5rem;
+    }
 }
