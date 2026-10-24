@@ -44,4 +44,16 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(body);
     }
+    @ExceptionHandler(GameLogNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleGameLogNotFound(
+            GameLogNotFoundException exception
+    ) {
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("status", 404);
+        body.put("error", "Not Found");
+        body.put("message", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
 }

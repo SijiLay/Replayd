@@ -1,5 +1,6 @@
 package com.replayd.service;
 
+import com.replayd.exception.GameLogNotFoundException;
 import com.replayd.exception.GameNotFoundException;
 import com.replayd.model.Game;
 import com.replayd.model.GameLog;
@@ -28,7 +29,8 @@ public class GameLogService {
     }
 
     public GameLog getGameLogById(Long id) {
-        return gameLogRepository.findById(id).orElse(null);
+        return gameLogRepository.findById(id)
+                .orElseThrow(() -> new GameLogNotFoundException(id));
     }
 
     public GameLog logGame(
