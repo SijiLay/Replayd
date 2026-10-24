@@ -4,6 +4,7 @@ import com.replayd.dto.SportsScheduleResponse;
 import com.replayd.dto.SportsSeasonResponse;
 import com.replayd.service.SportsDataService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,10 @@ public class SportsDataController {
     @GetMapping("/nfl/schedule")
     public SportsScheduleResponse getNflSchedule() {
         return sportsDataService.getNflSchedule();
+    }
+
+    @PostMapping("/nfl/import")
+    public void importNflSchedule() {
+        sportsDataService.importNflSchedule();
     }
 }

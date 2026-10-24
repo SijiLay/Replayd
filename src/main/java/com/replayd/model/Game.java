@@ -12,6 +12,9 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String externalId; //this is for TheSportsDB id, this makes sure no dups
+
     private String homeTeam;
     private String awayTeam;
     private LocalDateTime gameDate;
@@ -85,5 +88,13 @@ public class Game {
 
     public void setSport(String sport) {
         this.sport = sport;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }
