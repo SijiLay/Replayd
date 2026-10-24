@@ -64,12 +64,35 @@ function HomePage() {
                             to={`/history/${gameLog.id}`}
                             className="recent-card"
                         >
-                            <h3>
-                                {gameLog.game.awayTeam} at{" "}
-                                {gameLog.game.homeTeam}
-                            </h3>
+                            <div className="recent-card-teams">
 
-                            <p>
+                                <div className="recent-card-team">
+                                    {gameLog.game.awayTeamBadge && (
+                                        <img
+                                            src={gameLog.game.awayTeamBadge}
+                                            alt={`${gameLog.game.awayTeam} logo`}
+                                            className="recent-card-logo"
+                                        />
+                                    )}
+
+                                    <span>{gameLog.game.awayTeam}</span>
+                                </div>
+
+                                <div className="recent-card-team">
+                                    {gameLog.game.homeTeamBadge && (
+                                        <img
+                                            src={gameLog.game.homeTeamBadge}
+                                            alt={`${gameLog.game.homeTeam} logo`}
+                                            className="recent-card-logo"
+                                        />
+                                    )}
+
+                                    <span>{gameLog.game.homeTeam}</span>
+                                </div>
+
+                            </div>
+
+                            <p className="recent-watch-type">
                                 {gameLog.watchType === "FULL_GAME"
                                     ? "Full Game"
                                     : "Highlights"}
