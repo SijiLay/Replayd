@@ -29,7 +29,7 @@ public class GameLogControllerTest {
 
         GameLogRequest request = new GameLogRequest();
         request.setGameId(1L);
-        request.setRating(6);
+        request.setRating(6.0);
         request.setReviewText("Test review");
 
         mockMvc.perform(
@@ -45,7 +45,7 @@ public class GameLogControllerTest {
 
         GameLogRequest request = new GameLogRequest();
         request.setGameId(1L);
-        request.setRating(0);
+        request.setRating(0.0);
 
         mockMvc.perform(
                         post("/game-logs")
@@ -59,7 +59,7 @@ public class GameLogControllerTest {
 
         GameLogRequest request = new GameLogRequest();
         request.setGameId(1L);
-        request.setRating(5);
+        request.setRating(5.0);
         request.setReviewText("Great game");
 
         mockMvc.perform(
