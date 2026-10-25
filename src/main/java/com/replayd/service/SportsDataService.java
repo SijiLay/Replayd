@@ -50,8 +50,13 @@ public class SportsDataService {
         //gets the NFL schedule from TheSportsDB
         SportsScheduleResponse response = getNflSchedule();
 
+
         //goes through every game returned from TheSportsDB
         for (SportsEvent sportsEvent : response.getSchedule()) {
+
+            if("500".equals(sportsEvent.getIntRound())){
+                continue;
+            }
 
             //checks if Replayd already has this game using TheSportsDB's event ID
             Game game = gameRepository
