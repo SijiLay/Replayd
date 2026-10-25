@@ -36,3 +36,16 @@
 .navbar-links a:hover {
     color: #ffffff;
 }
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .navbar-links {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

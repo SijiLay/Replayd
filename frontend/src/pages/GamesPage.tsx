@@ -122,7 +122,11 @@ function GamesPage() {
             </div>
             <div className="games-list">
                 {filteredGames.length === 0 && (
-                    <p>No games found.</p>
+                    <p>
+                        {search.trim() !== ""
+                            ? "No games match your search."
+                            : `No games found for Week ${selectedWeek}.`}
+                    </p>
                 )}
                 {filteredGames.map((game) => (
                     <GameCard key={game.id} game={game} />

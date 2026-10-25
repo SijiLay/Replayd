@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import type { Game } from "../types/Game"
 import "./GameCard.css"
+import { useState } from "react"
 
 type GameCardProps = {
     game: Game
@@ -36,13 +37,10 @@ function GameCard({ game }: GameCardProps) {
             <div className="game-card-teams">
 
                 <div className="game-card-team">
-                    {game.awayTeamBadge && (
-                        <img
-                            src={game.awayTeamBadge}
-                            alt={`${game.awayTeam} logo`}
-                            className="team-logo"
-                        />
-                    )}
+                    <TeamLogo
+                        src={game.awayTeamBadge}
+                        team={game.awayTeam}
+                    />
 
                     <span className="team-name">
                         {game.awayTeam}
@@ -54,13 +52,10 @@ function GameCard({ game }: GameCardProps) {
                 </div>
 
                 <div className="game-card-team">
-                    {game.homeTeamBadge && (
-                        <img
-                            src={game.homeTeamBadge}
-                            alt={`${game.homeTeam} logo`}
-                            className="team-logo"
-                        />
-                    )}
+                    <TeamLogo
+                        src={game.homeTeamBadge}
+                        team={game.homeTeam}
+                    />
 
                     <span className="team-name">
                         {game.homeTeam}
@@ -83,6 +78,33 @@ function GameCard({ game }: GameCardProps) {
                 </span>
             </div>
         </Link>
+    )
+}
+
+function TeamLogo({
+                      src,
+                      team
+                  }: {
+    src: string | null
+    team: string
+}) {
+    const [imageFailed, setImageFailed] = useState(false)
+
+    if (!src || imageFailed) {
+        return (
+            <div className="team-logo-fallback">
+                {team.charAt(0)}
+            </div>
+        )
+    }
+
+    return (
+        <img
+            src={src}
+            alt={`${team} logo`}
+            className="team-logo"
+            onError={() => setImageFailed(true)}
+        />
     )
 }
 
