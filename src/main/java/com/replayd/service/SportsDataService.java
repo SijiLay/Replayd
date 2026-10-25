@@ -50,6 +50,10 @@ public class SportsDataService {
         //gets the NFL schedule from TheSportsDB
         SportsScheduleResponse response = getNflSchedule();
 
+        //stops import if the API returns no schedule data
+        if (response == null || response.getSchedule() == null) {
+            return;
+        }
 
         //goes through every game returned from TheSportsDB
         for (SportsEvent sportsEvent : response.getSchedule()) {
@@ -85,15 +89,11 @@ public class SportsDataService {
             game.setSport(sportsEvent.getStrSport());
 
             game.setHomeScore(
-                    sportsEvent.getIntHomeScore() == null
-                            ? null
-                            : Integer.parseInt(sportsEvent.getIntHomeScore())
+                    parseNullableInteger(sportsEvent.getIntHomeScore())
             );
 
             game.setAwayScore(
-                    sportsEvent.getIntAwayScore() == null
-                            ? null
-                            : Integer.parseInt(sportsEvent.getIntAwayScore())
+                    parseNullableInteger(sportsEvent.getIntAwayScore())
             );
 
             game.setStatus(sportsEvent.getStrStatus());
@@ -104,5 +104,14 @@ public class SportsDataService {
 
             gameRepository.save(game);
         }
+
+    }
+
+    private Integer parseNullableInteger(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+
+        return Integer.parseInt(value);
     }
 }

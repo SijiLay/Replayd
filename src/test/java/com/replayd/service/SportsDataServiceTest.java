@@ -113,6 +113,63 @@ class SportsDataServiceTest {
                 .save(any(Game.class));
     }
 
+    @Test
+    void importNflScheduleHandlesBlankScores() {
+
+        SportsEvent event = createTestEvent();
+
+        event.setIntHomeScore("");
+        event.setIntAwayScore("   ");
+
+        SportsScheduleResponse response =
+                createResponse(event);
+
+        doReturn(response)
+                .when(sportsDataService)
+                .getNflSchedule();
+
+        when(gameRepository.findByExternalId("12345"))
+                .thenReturn(Optional.empty());
+
+        sportsDataService.importNflSchedule();
+
+        verify(gameRepository).save(argThat(game ->
+                game.getHomeScore() == null
+                        && game.getAwayScore() == null
+        ));
+    }
+
+    @Test
+    void importNflScheduleHandlesNullResponse() {
+
+        doReturn(null)
+                .when(sportsDataService)
+                .getNflSchedule();
+
+        sportsDataService.importNflSchedule();
+
+        verify(gameRepository, never())
+                .save(any(Game.class));
+    }
+
+    @Test
+    void importNflScheduleHandlesNullSchedule() {
+
+        SportsScheduleResponse response =
+                new SportsScheduleResponse();
+
+        response.setSchedule(null);
+
+        doReturn(response)
+                .when(sportsDataService)
+                .getNflSchedule();
+
+        sportsDataService.importNflSchedule();
+
+        verify(gameRepository, never())
+                .save(any(Game.class));
+    }
+
 
     private SportsEvent createTestEvent() {
 
@@ -158,4 +215,6 @@ class SportsDataServiceTest {
 
         return response;
     }
+
+
 }
