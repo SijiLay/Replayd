@@ -45,6 +45,20 @@ function GamesPage() {
         }
 
         loadGames()
+
+        const refreshInterval = setInterval(async () => {
+            try {
+                const data = await getGames()
+                setGames(data)
+            } catch {
+                console.error("Could not refresh games")
+            }
+        }, 60000)
+
+        return () => {
+            clearInterval(refreshInterval)
+        }
+
     }, [])
 
     if (loading) {

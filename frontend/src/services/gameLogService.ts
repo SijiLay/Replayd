@@ -1,6 +1,5 @@
 import type { GameLog } from "../types/GameLog"
 
-
 export type GameLogRequest = {
     gameId: number
     watchType: "FULL_GAME" | "HIGHLIGHTS"
@@ -8,7 +7,10 @@ export type GameLogRequest = {
     reviewText: string | null
 }
 
-const API_URL = "http://localhost:8080/game-logs"
+const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080"
+
+const API_URL = `${API_BASE_URL}/game-logs`
 
 export async function logGame(request: GameLogRequest): Promise<GameLog> {
     const response = await fetch(API_URL, {

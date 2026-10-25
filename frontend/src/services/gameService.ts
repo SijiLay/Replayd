@@ -1,6 +1,9 @@
-import type { Game } from "../types/Game" //brings in Game TypeScript type
+import type { Game } from "../types/Game"
 
-const API_URL = "http://localhost:8080/games"
+const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080"
+
+const API_URL = `${API_BASE_URL}/games`
 
 export async function getGames(): Promise<Game[]> {
     const response = await fetch(API_URL)

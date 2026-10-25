@@ -5,9 +5,13 @@ import com.replayd.dto.SportsScheduleResponse;
 import com.replayd.dto.SportsSeasonResponse;
 import com.replayd.model.Game;
 import com.replayd.repository.GameRepository;
+import com.replayd.dto.LiveScoreEvent;
+import com.replayd.dto.LiveScoreResponse;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -113,5 +117,42 @@ public class SportsDataService {
         }
 
         return Integer.parseInt(value);
+    }
+
+    public LiveScoreResponse getNflLiveScores() {
+        return restClient.get()
+                .uri("/livescore/4391")
+                .retrieve()
+                .body(LiveScoreResponse.class);
+    }
+
+    @Scheduled(fixedRate = 120000)
+    public void refreshNflLiveScores() {
+
+        LiveScoreResponse response = getNflLiveScores();
+
+        if (response == null || response.getLivescore() == null) {
+            return;
+        }
+
+        for (LiveScoreEvent liveScore : response.getLivescore()) {
+
+            gameRepository
+                    .findByExternalId(liveScore.getIdEvent())
+                    .ifPresent(game -> {
+
+                        game.setHomeScore(
+                                parseNullableInteger(liveScore.getIntHomeScore())
+                        );
+
+                        game.setAwayScore(
+                                parseNullableInteger(liveScore.getIntAwayScore())
+                        );
+
+                        game.setStatus(liveScore.getStrProgress());
+
+                        gameRepository.save(game);
+                    });
+        }
     }
 }

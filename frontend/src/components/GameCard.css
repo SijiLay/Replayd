@@ -67,8 +67,65 @@
     transform: scale(0.98);
 }
 
-/* Accessibility */
+.game-status-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: livePulse 1.6s ease-in-out infinite;
+}
+
+.live-label {
+    color: #22c55e;
+    font-weight: 700;
+}
+
+.live-quarter {
+    color: white;
+    font-weight: 700;
+}
+
+.live-clock {
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.game-week {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+@keyframes livePulse {
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
+    .live-dot {
+        animation: none;
+    }
+
     .game-card {
         transition: none;
     }

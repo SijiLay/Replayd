@@ -32,4 +32,9 @@ public class SportsDataController {
     public void importNflSchedule() {
         sportsDataService.importNflSchedule();
     }
+
+    @PostMapping("/nfl/live/refresh")
+    public void refreshNflLiveScores() {
+        sportsDataService.refreshNflLiveScores();
+    }
 }
