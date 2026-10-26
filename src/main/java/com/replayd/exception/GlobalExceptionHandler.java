@@ -12,48 +12,41 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(GameNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleGameNotFound(GameNotFoundException ex) {
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("status", 404);
-        body.put("error", "Not Found");
-        body.put("message", ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(
+            IllegalArgumentException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationErrors(
-            MethodArgumentNotValidException ex) {
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("status", 400);
-        body.put("error", "Bad Request");
-
-        Map<String, String> validationErrors = new HashMap<>();
-
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                validationErrors.put(
-                        error.getField(),
-                        error.getDefaultMessage()
-                )
-        );
-
-        body.put("validationErrors", validationErrors);
-
-        return ResponseEntity.badRequest().body(body);
-    }
-    @ExceptionHandler(GameLogNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleGameLogNotFound(
-            GameLogNotFoundException exception
+    public ResponseEntity<Map<String, String>> handleValidationErrors(
+            MethodArgumentNotValidException exception
     ) {
-        Map<String, Object> body = new HashMap<>();
+        Map<String, String> errors = new HashMap<>();
 
-        body.put("status", 404);
-        body.put("error", "Not Found");
-        body.put("message", exception.getMessage());
+        exception.getBindingResult()
+                .getFieldErrors()
+                .forEach(error ->
+                        errors.put(
+                                error.getField(),
+                                error.getDefaultMessage()
+                        )
+                );
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        return ResponseEntity
+                .badRequest()
+                .body(errors);
     }
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentials(
+            InvalidCredentialsException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(exception.getMessage());
+    }
+
 }

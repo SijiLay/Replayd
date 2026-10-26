@@ -3,6 +3,26 @@ const API_BASE_URL =
 
 const AUTH_URL = `${API_BASE_URL}/auth`
 
+async function getErrorMessage(response: Response) {
+    const text = await response.text()
+
+    try {
+        const data = JSON.parse(text)
+
+        if (typeof data === "object" && data !== null) {
+            const messages = Object.values(data)
+
+            if (messages.length > 0) {
+                return String(messages[0])
+            }
+        }
+    } catch {
+        // Response was not JSON
+    }
+
+    return text
+}
+
 export type SignupRequest = {
     username: string
     email: string
@@ -41,7 +61,8 @@ export async function signup(
     })
 
     if (!response.ok) {
-        throw new Error("Signup failed")
+        const message = await getErrorMessage(response)
+        throw new Error(message || "Could not create account")
     }
 
     return response.json()
@@ -60,7 +81,8 @@ export async function login(
     })
 
     if (!response.ok) {
-        throw new Error("Login failed")
+        const message = await getErrorMessage(response)
+        throw new Error(message || "Login failed")
     }
 
     return response.json()

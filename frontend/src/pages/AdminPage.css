@@ -1,0 +1,78 @@
+.admin-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.admin-card {
+    width: 100%;
+    max-width: 700px;
+}
+
+.admin-card h1 {
+    margin-bottom: 8px;
+}
+
+.admin-subtitle {
+    color: #94a3b8;
+    margin-bottom: 28px;
+}
+
+.admin-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 20px;
+    margin-bottom: 16px;
+
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 14px;
+}
+
+.admin-action h2 {
+    margin: 0 0 6px;
+    font-size: 1.1rem;
+}
+
+.admin-action p {
+    margin: 0;
+    color: #94a3b8;
+}
+
+.admin-action button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+
+    background: white;
+    color: #111827;
+
+    font-weight: 700;
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.admin-action button:hover {
+    opacity: 0.9;
+}
+
+.admin-action button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.admin-message {
+    margin-top: 20px;
+    padding: 12px 14px;
+
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+
+    color: #cbd5e1;
+}

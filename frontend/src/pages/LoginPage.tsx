@@ -33,8 +33,12 @@ export default function LoginPage() {
 
             navigate("/")
 
-        } catch {
-            setError("Invalid username or password")
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message)
+            } else {
+                setError("Login failed")
+            }
         }
     }
 

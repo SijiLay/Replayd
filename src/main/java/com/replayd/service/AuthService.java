@@ -2,6 +2,7 @@ package com.replayd.service;
 
 import com.replayd.dto.LoginRequest;
 import com.replayd.dto.SignupRequest;
+import com.replayd.exception.InvalidCredentialsException;
 import com.replayd.model.Role;
 import com.replayd.model.User;
 import com.replayd.repository.UserRepository;
@@ -25,11 +26,11 @@ public class AuthService {
     public User signup(SignupRequest request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         String hashedPassword =

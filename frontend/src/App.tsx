@@ -11,7 +11,7 @@ import AdminPage from "./pages/AdminPage"
 
 import Navbar from "./components/Navbar"
 import ProtectedRoute from "./components/ProtectedRoute"
-import AdminRoute from "./components/AdminRoute"
+import AdminRoute from "./components/AdminRoute.tsx"
 
 function App() {
     return (
