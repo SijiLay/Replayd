@@ -15,7 +15,9 @@ public class GameLog {
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private WatchType watchType = WatchType.FULL_GAME;
@@ -41,6 +43,14 @@ public class GameLog {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Game getGame() {

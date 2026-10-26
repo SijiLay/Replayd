@@ -93,7 +93,17 @@
     font-weight: 700;
 }
 
+.login-required-message {
+    margin: 12px 0 18px;
+    padding: 12px 14px;
 
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+
+    color: #cbd5e1;
+    font-size: 0.95rem;
+}
 
 
 @media (max-width: 600px) {

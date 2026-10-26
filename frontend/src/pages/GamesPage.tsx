@@ -18,16 +18,25 @@ function GamesPage() {
                 setGames(data)
                 const now = new Date()
 
-                const upcomingGames = data
-                    .filter((game) => new Date(game.gameDate) >= now)
+                const relevantGames = data
+                    .filter(
+                        (game) =>
+                            isLiveGame(game) ||
+                            new Date(game.gameDate) >= now
+                    )
+                    .sort(
+                        (a, b) =>
+                            new Date(a.gameDate).getTime() -
+                            new Date(b.gameDate).getTime()
+                    )
                     .sort(
                         (a, b) =>
                             new Date(a.gameDate).getTime() -
                             new Date(b.gameDate).getTime()
                     )
 
-                if (upcomingGames.length > 0) {
-                    setSelectedWeek(upcomingGames[0].week)
+                if (relevantGames.length > 0) {
+                    setSelectedWeek(relevantGames[0].week)
                 } else if (data.length > 0) {
                     const latestGame = [...data].sort(
                         (a, b) =>
@@ -81,11 +90,19 @@ function GamesPage() {
 
             return matchesSearch && matchesWeek
         })
-        .sort(
-            (a, b) =>
+        .sort((a, b) => {
+            const aPriority = getGamePriority(a)
+            const bPriority = getGamePriority(b)
+
+            if (aPriority !== bPriority) {
+                return aPriority - bPriority
+            }
+
+            return (
                 new Date(a.gameDate).getTime() -
                 new Date(b.gameDate).getTime()
-        )
+            )
+        })
 
     return (
         <main>
@@ -149,5 +166,31 @@ function GamesPage() {
         </main>
     )
 }
+function getGamePriority(game: Game) {
+    if (isLiveGame(game)) {
+        return 0
+    }
 
+    if (!isFinishedGame(game)) {
+        return 1
+    }
+
+    return 2
+}
+
+function isFinishedGame(game: Game) {
+    return (
+        game.status === "Final" ||
+        game.status === "FT" ||
+        game.status === "AOT"
+    )
+}
+
+function isLiveGame(game: Game) {
+    return (
+        game.status !== null &&
+        game.status !== "NS" &&
+        !isFinishedGame(game)
+    )
+}
 export default GamesPage

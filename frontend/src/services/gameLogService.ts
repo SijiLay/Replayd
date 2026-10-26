@@ -1,5 +1,18 @@
 import type { GameLog } from "../types/GameLog"
 
+function getAuthHeaders() {
+    const token = localStorage.getItem("token")
+
+    return token
+        ? {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+        : {
+            "Content-Type": "application/json"
+        }
+}
+
 export type GameLogRequest = {
     gameId: number
     watchType: "FULL_GAME" | "HIGHLIGHTS"
@@ -12,13 +25,13 @@ const API_BASE_URL =
 
 const API_URL = `${API_BASE_URL}/game-logs`
 
-export async function logGame(request: GameLogRequest): Promise<GameLog> {
+export async function logGame(
+    request: GameLogRequest
+): Promise<GameLog> {
     const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(request),
+        headers: getAuthHeaders(),
+        body: JSON.stringify(request)
     })
 
     if (!response.ok) {
@@ -29,7 +42,9 @@ export async function logGame(request: GameLogRequest): Promise<GameLog> {
 }
 
 export async function getGameLogs(): Promise<GameLog[]> {
-    const response = await fetch(API_URL)
+    const response = await fetch(API_URL, {
+        headers: getAuthHeaders()
+    })
 
     if (!response.ok) {
         throw new Error("Failed to fetch game logs")
@@ -38,19 +53,29 @@ export async function getGameLogs(): Promise<GameLog[]> {
     return response.json()
 }
 
-export async function getGameLogById(id: number): Promise<GameLog> {
-    const response = await fetch(`${API_URL}/${id}`)
+export async function getGameLogById(
+    id: number
+): Promise<GameLog> {
+    const response = await fetch(`${API_URL}/${id}`, {
+        headers: getAuthHeaders()
+    })
 
     if (!response.ok) {
         throw new Error("Failed to fetch game log")
     }
+
     return response.json()
 }
 
 export async function getGameLogByGameId(
     gameId: number
 ): Promise<GameLog | null> {
-    const response = await fetch(`${API_URL}/game/${gameId}`)
+    const response = await fetch(
+        `${API_URL}/game/${gameId}`,
+        {
+            headers: getAuthHeaders()
+        }
+    )
 
     if (response.status === 404) {
         return null
@@ -62,6 +87,3 @@ export async function getGameLogByGameId(
 
     return response.json()
 }
-
-
-

@@ -4,9 +4,13 @@ import com.replayd.exception.GameLogNotFoundException;
 import com.replayd.exception.GameNotFoundException;
 import com.replayd.model.Game;
 import com.replayd.model.GameLog;
+import com.replayd.model.User;
 import com.replayd.model.WatchType;
 import com.replayd.repository.GameLogRepository;
 import com.replayd.repository.GameRepository;
+import com.replayd.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,20 +21,35 @@ public class GameLogService {
 
     private final GameLogRepository gameLogRepository;
     private final GameRepository gameRepository;
+    private final UserRepository userRepository;
 
-    public GameLogService(GameLogRepository gameLogRepository,
-                          GameRepository gameRepository) {
+    public GameLogService(
+            GameLogRepository gameLogRepository,
+            GameRepository gameRepository,
+            UserRepository userRepository
+    ) {
         this.gameLogRepository = gameLogRepository;
         this.gameRepository = gameRepository;
+        this.userRepository = userRepository;
     }
 
     public List<GameLog> getAllGameLogs() {
-        return gameLogRepository.findAll();
+        User user = getCurrentUser();
+
+        return gameLogRepository.findByUser(user);
     }
 
     public GameLog getGameLogById(Long id) {
-        return gameLogRepository.findById(id)
+        GameLog gameLog = gameLogRepository.findById(id)
                 .orElseThrow(() -> new GameLogNotFoundException(id));
+
+        User user = getCurrentUser();
+
+        if (!gameLog.getUser().getId().equals(user.getId())) {
+            throw new GameLogNotFoundException(id);
+        }
+
+        return gameLog;
     }
 
     public GameLog logGame(
@@ -40,6 +59,8 @@ public class GameLogService {
             String reviewText
     ) {
 
+        User user = getCurrentUser();
+
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new GameNotFoundException(gameId));
 
@@ -47,7 +68,7 @@ public class GameLogService {
                 watchType == null ? WatchType.FULL_GAME : watchType;
 
         Optional<GameLog> existingLog =
-                gameLogRepository.findByGameId(gameId);
+                gameLogRepository.findByGameIdAndUser(gameId, user);
 
         if (existingLog.isPresent()) {
             GameLog gameLog = existingLog.get();
@@ -62,10 +83,32 @@ public class GameLogService {
         GameLog newGameLog =
                 new GameLog(game, finalWatchType, rating, reviewText);
 
+        newGameLog.setUser(user);
+
         return gameLogRepository.save(newGameLog);
     }
 
     public GameLog getGameLogByGameId(Long gameId) {
-        return gameLogRepository.findByGameId(gameId).orElse(null);
+        User user = getCurrentUser();
+
+        return gameLogRepository
+                .findByGameIdAndUser(gameId, user)
+                .orElse(null);
+    }
+
+    private User getCurrentUser() {
+
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        String username = authentication.getName();
+
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User not found")
+                );
     }
 }

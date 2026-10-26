@@ -1,14 +1,21 @@
-import { useEffect, useState } from "react" //use state stores temporary page data
-import { useParams } from "react-router-dom" //gets id
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+
 import type { Game } from "../types/Game"
+
 import { getGameById } from "../services/gameService"
-import { getGameLogByGameId, logGame } from "../services/gameLogService"
-import "./GameDetailPage.css"
+import {
+    getGameLogByGameId,
+    logGame
+} from "../services/gameLogService"
+
 import StarRating from "../components/StarRating"
 
+import "./GameDetailPage.css"
 
 function GameDetailPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
 
     const [game, setGame] = useState<Game | null>(null)
     const [loading, setLoading] = useState(true)
@@ -19,41 +26,61 @@ function GameDetailPage() {
     const [saving, setSaving] = useState(false)
     const [saveMessage, setSaveMessage] = useState<string | null>(null)
     const [isLogged, setIsLogged] = useState(false)
+
     const [watchType, setWatchType] =
         useState<"FULL_GAME" | "HIGHLIGHTS">("FULL_GAME")
 
+    const isAuthenticated =
+        localStorage.getItem("token") !== null
 
     useEffect(() => {
         async function loadGame() {
-            try {
-                if (!id) {
-                    setError("Game not found")
-                    return
-                }
+            if (!id) {
+                setError("Game not found")
+                setLoading(false)
+                return
+            }
 
+            try {
                 const data = await getGameById(Number(id))
                 setGame(data)
-
-                const existingLog = await getGameLogByGameId(Number(id))
-
-                if (existingLog) {
-                    setIsLogged(true)
-                    setWatchType(existingLog.watchType)
-                    setRating(existingLog.rating)
-                    setReviewText(existingLog.reviewText ?? "")
-                }
             } catch {
                 setError("Could not load game")
-            } finally {
                 setLoading(false)
+                return
             }
+
+            if (isAuthenticated) {
+                try {
+                    const existingLog =
+                        await getGameLogByGameId(Number(id))
+
+                    if (existingLog) {
+                        setIsLogged(true)
+                        setWatchType(existingLog.watchType)
+                        setRating(existingLog.rating)
+                        setReviewText(existingLog.reviewText ?? "")
+                    }
+                } catch {
+                    console.error("Could not load user's Replayd log")
+                }
+            }
+
+            setLoading(false)
         }
 
         loadGame()
-    }, [id])
+    }, [id, isAuthenticated])
 
     async function handleReplayd() {
-        if (!game) return
+        if (!game) {
+            return
+        }
+
+        if (!isAuthenticated) {
+            navigate("/login")
+            return
+        }
 
         try {
             setSaving(true)
@@ -63,12 +90,20 @@ function GameDetailPage() {
                 gameId: game.id,
                 watchType,
                 rating,
-                reviewText: reviewText.trim() === "" ? null : reviewText,
+                reviewText:
+                    reviewText.trim() === ""
+                        ? null
+                        : reviewText
             })
 
-            setIsLogged(true);
+            setIsLogged(true)
 
-            setSaveMessage("Game added to Replayd")
+            setSaveMessage(
+                isLogged
+                    ? "Replayd updated"
+                    : "Game added to Replayd"
+            )
+
         } catch {
             setSaveMessage("Could not save game")
         } finally {
@@ -84,12 +119,24 @@ function GameDetailPage() {
         return <p>{error ?? "Game not found"}</p>
     }
 
+    const displayStatus =
+        game.status === "FT" ||
+        game.status === "Final"
+            ? "FINAL"
+            : game.status === "AOT"
+                ? "FINAL/OT"
+                : game.status === "NS" ||
+                game.status === null
+                    ? "Scheduled"
+                    : game.status
+
     return (
         <main className="game-detail">
 
             <section className="game-detail-header">
 
                 <div className="game-detail-team">
+
                     {game.awayTeamBadge && (
                         <img
                             src={game.awayTeamBadge}
@@ -99,17 +146,20 @@ function GameDetailPage() {
                     )}
 
                     <div className="game-detail-team-info">
-            <span className="game-detail-team-name">
-                {game.awayTeam}
-            </span>
+
+                        <span className="game-detail-team-name">
+                            {game.awayTeam}
+                        </span>
 
                         <span className="game-detail-score">
-                {game.awayScore ?? "-"}
-            </span>
+                            {game.awayScore ?? "-"}
+                        </span>
+
                     </div>
                 </div>
 
                 <div className="game-detail-team">
+
                     {game.homeTeamBadge && (
                         <img
                             src={game.homeTeamBadge}
@@ -119,22 +169,20 @@ function GameDetailPage() {
                     )}
 
                     <div className="game-detail-team-info">
-            <span className="game-detail-team-name">
-                {game.homeTeam}
-            </span>
+
+                        <span className="game-detail-team-name">
+                            {game.homeTeam}
+                        </span>
 
                         <span className="game-detail-score">
-                {game.homeScore ?? "-"}
-            </span>
+                            {game.homeScore ?? "-"}
+                        </span>
+
                     </div>
                 </div>
 
                 <p className="game-detail-meta">
-                    {game.status === "FT"
-                        ? "FINAL"
-                        : game.status === "AOT"
-                            ? "FINAL/OT"
-                            : game.status ?? "Scheduled"}
+                    {displayStatus}
                     {" • "}
                     Week {game.week}
                     {" • "}
@@ -142,19 +190,34 @@ function GameDetailPage() {
                 </p>
 
                 <p>
-                    {new Date(game.gameDate).toLocaleString("en-US", {
-                        weekday: "long",
-                        month: "long",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "2-digit"
-                    })}
+                    {new Date(game.gameDate).toLocaleString(
+                        "en-US",
+                        {
+                            weekday: "long",
+                            month: "long",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "2-digit"
+                        }
+                    )}
                 </p>
 
             </section>
 
+
             <section className="log-panel">
-                <h2>{isLogged ? "Update your Replayd" : "Log this game"}</h2>
+
+                <h2>
+                    {isLogged
+                        ? "Update your Replayd"
+                        : "Log this game"}
+                </h2>
+
+                {!isAuthenticated && (
+                    <p className="login-required-message">
+                        Sign in to add this game to your Replayd history.
+                    </p>
+                )}
 
                 <div className="form-group">
                     <label>Watch Type</label>
@@ -168,8 +231,13 @@ function GameDetailPage() {
                             )
                         }
                     >
-                        <option value="FULL_GAME">Full Game</option>
-                        <option value="HIGHLIGHTS">Highlights</option>
+                        <option value="FULL_GAME">
+                            Full Game
+                        </option>
+
+                        <option value="HIGHLIGHTS">
+                            Highlights
+                        </option>
                     </select>
                 </div>
 
@@ -202,14 +270,19 @@ function GameDetailPage() {
                 >
                     {saving
                         ? "Saving..."
-                        : isLogged
-                            ? "Update Replayd"
-                            : "Mark as Replayd"}
+                        : !isAuthenticated
+                            ? "Sign in to Replayd"
+                            : isLogged
+                                ? "Update Replayd"
+                                : "Mark as Replayd"}
                 </button>
 
                 {saveMessage && (
-                    <p className="save-message">{saveMessage}</p>
+                    <p className="save-message">
+                        {saveMessage}
+                    </p>
                 )}
+
             </section>
 
         </main>

@@ -37,6 +37,49 @@
     color: #ffffff;
 }
 
+.navbar-username {
+    color: #cbd5e1;
+    font-weight: 600;
+    padding: 8px 10px;
+}
+
+.navbar-logout {
+    padding: 8px 14px;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.navbar-logout:hover {
+    background: #1e293b;
+    border-color: #64748b;
+}
+
+.navbar-login {
+    padding: 8px 14px;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.navbar-login:hover {
+    background: #1e293b;
+    border-color: #64748b;
+}
+
 @media (max-width: 600px) {
     .navbar {
         flex-wrap: wrap;
