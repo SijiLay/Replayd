@@ -9,15 +9,16 @@ export default function LoginPage() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false)
+
 
     const navigate = useNavigate()
 
-    async function handleSubmit(
-        event: React.FormEvent<HTMLFormElement>
-    ) {
+    async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
 
         try {
+            setLoading(true)
             setError(null)
 
             const response = await login({
@@ -32,13 +33,14 @@ export default function LoginPage() {
             window.dispatchEvent(new Event("auth-changed"))
 
             navigate("/")
-
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message)
             } else {
                 setError("Login failed")
             }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -77,10 +79,11 @@ export default function LoginPage() {
                     />
 
                     <button
-                        type="submit"
                         className="auth-button"
+                        type="submit"
+                        disabled={loading}
                     >
-                        Sign In
+                        {loading ? "Signing in..." : "Sign In"}
                     </button>
 
                     {error && (
