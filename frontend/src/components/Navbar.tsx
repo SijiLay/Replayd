@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import "./Navbar.css"
 
+
 function Navbar() {
+    const location = useLocation()
+
     const [username, setUsername] = useState<string | null>(
         localStorage.getItem("username")
     )
 
-    const navigate = useNavigate()
     const [role, setRole] = useState<string | null>(
         localStorage.getItem("role")
     )
+
+    const [menuOpen, setMenuOpen] = useState(false)
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        setMenuOpen(false)
+    }, [location.pathname])
 
 
     useEffect(() => {
@@ -33,33 +43,56 @@ function Navbar() {
 
         setUsername(null)
         setRole(null)
+        setMenuOpen(false)
 
         window.dispatchEvent(new Event("auth-changed"))
 
         navigate("/")
     }
 
+    function closeMenu() {
+        setMenuOpen(false)
+    }
+
     return (
         <nav className="navbar">
-
-            <Link to="/" className="navbar-brand">
+            <Link
+                to="/"
+                className="navbar-brand"
+                onClick={closeMenu}
+            >
                 Replayd
             </Link>
 
-            <div className="navbar-links">
+            <button
+                type="button"
+                className="navbar-menu-button"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle navigation menu"
+                aria-expanded={menuOpen}
+            >
+                ☰
+            </button>
 
-                <Link to="/">Home</Link>
+            <div
+                className={`navbar-links ${
+                    menuOpen ? "navbar-links-open" : ""
+                }`}
+            >
+                <Link to="/" onClick={closeMenu}>
+                    Home
+                </Link>
 
-                <Link to="/games">
+                <Link to="/games" onClick={closeMenu}>
                     Games
                 </Link>
 
-                <Link to="/history">
+                <Link to="/history" onClick={closeMenu}>
                     History
                 </Link>
 
                 {role === "ADMIN" && (
-                    <Link to="/admin">
+                    <Link to="/admin" onClick={closeMenu}>
                         Admin
                     </Link>
                 )}
@@ -82,13 +115,12 @@ function Navbar() {
                     <Link
                         to="/login"
                         className="navbar-login"
+                        onClick={closeMenu}
                     >
                         Login
                     </Link>
                 )}
-
             </div>
-
         </nav>
     )
 }

@@ -1,7 +1,9 @@
 .admin-page {
     min-height: calc(100vh - 80px);
+
     display: flex;
     justify-content: center;
+
     padding: 40px 24px;
 }
 
@@ -15,14 +17,17 @@
 }
 
 .admin-subtitle {
-    color: #94a3b8;
     margin-bottom: 28px;
+
+    color: #94a3b8;
+    line-height: 1.5;
 }
 
 .admin-action {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 24px;
 
     padding: 20px;
@@ -35,16 +40,20 @@
 
 .admin-action h2 {
     margin: 0 0 6px;
+
     font-size: 1.1rem;
 }
 
 .admin-action p {
     margin: 0;
+
     color: #94a3b8;
+    line-height: 1.5;
 }
 
 .admin-action button {
     padding: 10px 16px;
+
     border: none;
     border-radius: 8px;
 
@@ -55,9 +64,10 @@
     cursor: pointer;
 
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.admin-action button:hover {
+.admin-action button:hover:not(:disabled) {
     opacity: 0.9;
 }
 
@@ -75,4 +85,58 @@
     border-radius: 10px;
 
     color: #cbd5e1;
+    line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+    .admin-page {
+        min-height: calc(100vh - 64px);
+
+        padding: 32px 20px;
+    }
+
+    .admin-card h1 {
+        font-size: 1.7rem;
+    }
+
+    .admin-subtitle {
+        margin-bottom: 22px;
+        font-size: 0.95rem;
+    }
+
+    .admin-action {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 16px;
+
+        padding: 18px;
+    }
+
+    .admin-action h2 {
+        font-size: 1rem;
+    }
+
+    .admin-action p {
+        font-size: 0.9rem;
+    }
+
+    .admin-action button {
+        width: 100%;
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .admin-page {
+        padding: 24px 16px;
+    }
+
+    .admin-action {
+        padding: 16px;
+    }
+
+    .admin-card h1 {
+        font-size: 1.5rem;
+    }
 }

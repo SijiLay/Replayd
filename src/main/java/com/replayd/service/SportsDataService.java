@@ -155,4 +155,9 @@ public class SportsDataService {
                     });
         }
     }
+
+    @Scheduled(fixedRate = 600000)
+    public void refreshNflSchedule() {
+        importNflSchedule();
+    }
 }

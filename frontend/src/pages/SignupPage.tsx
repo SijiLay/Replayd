@@ -9,7 +9,7 @@ export default function SignupPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState<string | null>(null)
-
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     async function handleSubmit(
@@ -18,6 +18,7 @@ export default function SignupPage() {
         event.preventDefault()
 
         try {
+            setLoading(true)
             setError(null)
 
             await signup({
@@ -28,8 +29,14 @@ export default function SignupPage() {
 
             navigate("/login")
 
-        } catch {
-            setError("Could not create account")
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message)
+            } else {
+                setError("Could not create account")
+            }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -79,8 +86,9 @@ export default function SignupPage() {
                     <button
                         type="submit"
                         className="auth-button"
+                        disabled={loading}
                     >
-                        Create Account
+                        {loading ? "Creating account..." : "Create Account"}
                     </button>
 
                     {error && (

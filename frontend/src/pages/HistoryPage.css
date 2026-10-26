@@ -55,6 +55,7 @@
 .history-card-top {
     display: flex;
     flex-direction: column;
+
     gap: 10px;
     margin-bottom: 16px;
 }
@@ -62,14 +63,85 @@
 .history-card-team {
     display: flex;
     align-items: center;
+
     gap: 12px;
 
     font-size: 1.05rem;
     font-weight: 600;
+
+    min-width: 0;
 }
 
 .history-card-logo {
     width: 42px;
     height: 42px;
+
     object-fit: contain;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .history-page-header {
+        margin-bottom: 22px;
+    }
+
+    .history-page-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .history-page-header p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .history-list {
+        gap: 14px;
+    }
+
+    .history-card {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .history-card-top {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .history-card-team {
+        gap: 10px;
+        font-size: 0.95rem;
+    }
+
+    .history-card-logo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .history-meta {
+        font-size: 0.85rem;
+    }
+
+    .history-review {
+        margin-top: 12px;
+        padding-top: 12px;
+
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 400px) {
+    .history-card {
+        padding: 14px;
+    }
+
+    .history-card-logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .history-card-team {
+        font-size: 0.9rem;
+    }
 }

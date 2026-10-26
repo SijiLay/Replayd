@@ -181,6 +181,7 @@ function getGamePriority(game: Game) {
 function isFinishedGame(game: Game) {
     return (
         game.status === "Final" ||
+        game.status === "Final/OT" ||
         game.status === "FT" ||
         game.status === "AOT"
     )

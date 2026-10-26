@@ -25,7 +25,7 @@ function GameCard({ game }: GameCardProps) {
     const displayStatus =
         game.status === "FT"
             ? "FINAL"
-            : game.status === "AOT"
+            : game.status === "AOT" || game.status === "Final/OT"
                 ? "FINAL/OT"
                 : game.status === "Final"
                     ? "FINAL"
@@ -34,6 +34,7 @@ function GameCard({ game }: GameCardProps) {
     const isLive =
         game.status !== null &&
         game.status !== "Final" &&
+        game.status !== "Final/OT" &&
         game.status !== "FT" &&
         game.status !== "AOT" &&
         game.status !== "NS"

@@ -42,6 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     gap: 16px;
     margin: 24px 0;
 }
@@ -50,8 +51,10 @@
 .week-navigation select {
     background: #111827;
     color: white;
+
     border: 1px solid #334155;
     border-radius: 10px;
+
     padding: 10px 14px;
     font-size: 0.95rem;
 }
@@ -73,5 +76,67 @@
 @media (max-width: 768px) {
     .games-list {
         grid-template-columns: 1fr;
+    }
+
+    .games-page-header {
+        margin-bottom: 22px;
+    }
+
+    .game-search {
+        margin-bottom: 20px;
+    }
+
+    .week-navigation {
+        gap: 10px;
+    }
+
+    .week-navigation button,
+    .week-navigation select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .games-page-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .games-page-header p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .game-search {
+        padding: 11px 12px;
+    }
+
+    .week-navigation {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+
+        width: 100%;
+        gap: 8px;
+    }
+
+    .week-navigation button,
+    .week-navigation select {
+        width: 100%;
+        min-width: 0;
+
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+
+    .week-navigation button:first-child {
+        text-align: center;
+    }
+
+    .week-navigation button:last-child {
+        text-align: center;
+    }
+
+    .games-list {
+        gap: 14px;
     }
 }
