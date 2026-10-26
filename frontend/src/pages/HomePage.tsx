@@ -22,6 +22,22 @@ function HomePage() {
     const isLoggedIn = localStorage.getItem("token") !== null
 
     useEffect(() => {
+        function handleAuthChange() {
+            const token = localStorage.getItem("token")
+
+            if (!token) {
+                setRecentLogs([])
+            }
+        }
+
+        window.addEventListener("auth-changed", handleAuthChange)
+
+        return () => {
+            window.removeEventListener("auth-changed", handleAuthChange)
+        }
+    }, [])
+
+    useEffect(() => {
 
         async function loadRecentLogs() {
 
