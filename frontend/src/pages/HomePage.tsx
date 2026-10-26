@@ -11,6 +11,10 @@ import StarRating from "../components/StarRating"
 import GameCard from "../components/GameCard"
 
 import "./HomePage.css"
+import {
+    isFinishedGame,
+    isLiveGame
+} from "../utils/gameStatus"
 
 function HomePage() {
     const [recentLogs, setRecentLogs] = useState<GameLog[]>([])
@@ -310,21 +314,7 @@ function getGamePriority(game: Game) {
     return 2
 }
 
-function isFinishedGame(game: Game) {
-    return (
-        game.status === "Final" ||
-        game.status === "Final/OT" ||
-        game.status === "FT" ||
-        game.status === "AOT"
-    )
-}
 
-function isLiveGame(game: Game) {
-    return (
-        game.status !== null &&
-        game.status !== "NS" &&
-        !isFinishedGame(game)
-    )
-}
+
 
 export default HomePage

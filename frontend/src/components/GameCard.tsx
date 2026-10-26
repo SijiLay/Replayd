@@ -2,6 +2,11 @@ import { Link } from "react-router-dom"
 import type { Game } from "../types/Game"
 import "./GameCard.css"
 import { useState } from "react"
+import {
+    isLiveGame,
+    getDisplayStatus
+} from "../utils/gameStatus"
+
 
 type GameCardProps = {
     game: Game
@@ -22,22 +27,8 @@ function GameCard({ game }: GameCardProps) {
         minute: "2-digit"
     })
 
-    const displayStatus =
-        game.status === "FT"
-            ? "FINAL"
-            : game.status === "AOT" || game.status === "Final/OT"
-                ? "FINAL/OT"
-                : game.status === "Final"
-                    ? "FINAL"
-                    : game.status ?? "Scheduled"
-
-    const isLive =
-        game.status !== null &&
-        game.status !== "Final" &&
-        game.status !== "Final/OT" &&
-        game.status !== "FT" &&
-        game.status !== "AOT" &&
-        game.status !== "NS"
+    const displayStatus = getDisplayStatus(game)
+    const isLive = isLiveGame(game)
 
     let liveClock: string | null = null
     let liveQuarter: string | null = null
