@@ -96,10 +96,36 @@ public class GameLogServiceTest {
         assertEquals(WatchType.FULL_GAME, result.getWatchType());
         assertEquals(game, result.getGame());
         assertEquals(user, result.getUser());
+        assertFalse(result.isPrivateReview());
         assertNotNull(result.getLoggedAt());
 
         verify(gameLogRepository, times(1))
                 .save(any(GameLog.class));
+    }
+
+    @Test
+    void logGameDefaultsReviewToPrivateWhenUserProfileIsPrivate() {
+        user.setPrivateProfile(true);
+        Game game = createGame();
+
+        when(gameRepository.findById(1L))
+                .thenReturn(Optional.of(game));
+
+        when(gameLogRepository.findByGameIdAndUser(1L, user))
+                .thenReturn(Optional.empty());
+
+        when(gameLogRepository.save(any(GameLog.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        GameLog result = gameLogService.logGame(
+                1L,
+                WatchType.FULL_GAME,
+                5.0,
+                "Great game"
+        );
+
+        assertTrue(result.isPrivateReview());
+        verify(gameLogRepository).save(result);
     }
 
 

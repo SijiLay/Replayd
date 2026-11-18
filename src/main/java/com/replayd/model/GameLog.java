@@ -25,6 +25,7 @@ public class GameLog {
     private LocalDateTime loggedAt;
     private Double rating;
     private String reviewText;
+    private boolean privateReview = false;
 
     public GameLog() {
     }
@@ -83,6 +84,14 @@ public class GameLog {
 
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
+    }
+
+    public boolean isPrivateReview() {
+        return privateReview;
+    }
+
+    public void setPrivateReview(boolean privateReview) {
+        this.privateReview = privateReview;
     }
 
     public WatchType getWatchType() {return watchType;}

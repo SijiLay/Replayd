@@ -84,6 +84,7 @@ public class GameLogService {
                 new GameLog(game, finalWatchType, rating, reviewText);
 
         newGameLog.setUser(user);
+        newGameLog.setPrivateReview(user.isPrivateProfile());
 
         return gameLogRepository.save(newGameLog);
     }
