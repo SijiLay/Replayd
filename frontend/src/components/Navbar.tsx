@@ -91,6 +91,12 @@ function Navbar() {
                     History
                 </Link>
 
+                {username && (
+                    <Link to="/profile" onClick={closeMenu}>
+                        Profile
+                    </Link>
+                )}
+
                 {role === "ADMIN" && (
                     <Link to="/admin" onClick={closeMenu}>
                         Admin

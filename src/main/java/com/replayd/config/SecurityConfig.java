@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/games/**").permitAll()
                         .requestMatchers("/game-logs/**").authenticated()
+                        .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/sports-data/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )

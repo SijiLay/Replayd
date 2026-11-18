@@ -13,6 +13,9 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
 
+    @Column(nullable = false)
+    private boolean privateProfile = false;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -83,5 +86,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isPrivateProfile() {
+        return privateProfile;
+    }
+
+    public void setPrivateProfile(boolean privateProfile) {
+        this.privateProfile = privateProfile;
     }
 }
